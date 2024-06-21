@@ -1,10 +1,22 @@
 import { Box } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
 
-const urlLinks = [
-  { name: 'Diretores', url: 'http://localhost:3000/diretores' },
-  { name: 'Alunos', url: 'http://localhost:3000/alunos' },
-  { name: 'Sala de aula', url: 'http://localhost:3000/salas' },
+// const urlLinks = [
+//   { name: 'Diretores', url: 'http://localhost:3000/diretores' },
+//   { name: 'Alunos', url: 'http://localhost:3000/alunos' },
+//   { name: 'Sala de aula', url: 'http://localhost:3000/salas' },
+// ];
+
+const urlLinksProd = [
+  {
+    name: 'Diretores',
+    url: 'https://controle-sala-de-turmas.netlify.app/diretores',
+  },
+  { name: 'Alunos', url: 'https://controle-sala-de-turmas.netlify.app/alunos' },
+  {
+    name: 'Sala de aula',
+    url: 'https://controle-sala-de-turmas.netlify.app/salas',
+  },
 ];
 
 const SideBarLinks = () => {
@@ -22,7 +34,7 @@ const SideBarLinks = () => {
           borderRight: '2px solid #ceced3',
         }}
       >
-        {urlLinks.map((link) => (
+        {urlLinksProd.map((link) => (
           <Box
             component="li"
             sx={{
