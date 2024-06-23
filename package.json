@@ -11,11 +11,17 @@
     "test": "jest"
   },
   "optionalDependencies": {
-    "fsevents": "*"
+    "fsevents": "*",
+    "esbuild-android-64": "0.14.32",
+    "esbuild-android-arm64": "0.14.32",
+    "esbuild-darwin-64": "0.14.32",
+    "esbuild-darwin-arm64": "0.14.32",
+    "esbuild-freebsd-64": "0.14.32"
   },
   "engines": {
     "node": ">=16.0.0"
   },
+
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
