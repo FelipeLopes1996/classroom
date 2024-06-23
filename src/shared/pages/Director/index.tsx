@@ -7,9 +7,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { IDirector, directors } from '../../../api/api';
+import { directors } from '../../../api/api';
+import WrapperContainer from '../../components/WrapperContainer';
 import CreateAndEditDirectorForm from './components/CreateAndEditDirectorForm';
 import TableDirectors from './components/TableDirectors';
+import { IDirector } from '../../types/IDirector';
 
 const Director = () => {
   const [directorsData, setDirectorsData] = useState<IDirector[]>([]);
@@ -32,9 +34,9 @@ const Director = () => {
         setLoading(false);
       });
   }, []);
+
   useEffect(() => {
     if (!showForm && directorEditData && directorEditData.nome) {
-      console.log('cai');
       setShowForm(true);
     }
   }, [directorEditData, showForm, directorEditData?.nome]);
@@ -49,11 +51,9 @@ const Director = () => {
 
     setOpen(false);
   };
-  console.log(showForm);
-  console.log(directorEditData);
 
   return (
-    <Box sx={{ width: '100%', p: '2.5rem' }}>
+    <WrapperContainer>
       <Typography sx={{ fontSize: '2.5rem' }}>Diretores</Typography>
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '8rem' }}>
@@ -111,7 +111,7 @@ const Director = () => {
           {snackbarText}
         </Alert>
       </Snackbar>
-    </Box>
+    </WrapperContainer>
   );
 };
 

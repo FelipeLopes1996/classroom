@@ -1,26 +1,10 @@
 import { Box } from '@mui/material';
 import { NavLink, useLocation } from 'react-router-dom';
-
-// const urlLinks = [
-//   { name: 'Diretores', url: 'http://localhost:3000/diretores' },
-//   { name: 'Alunos', url: 'http://localhost:3000/alunos' },
-//   { name: 'Sala de aula', url: 'http://localhost:3000/salas' },
-// ];
-
-const urlLinksProd = [
-  {
-    name: 'Diretores',
-    url: `/diretores`,
-  },
-  { name: 'Alunos', url: `/alunos` },
-  {
-    name: 'Sala de aula',
-    url: `/salas`,
-  },
-];
+import { navLinksData } from '../../utils/navLinksData';
 
 const SideBarLinks = () => {
   const { pathname } = useLocation();
+
   return (
     <Box component="aside">
       <Box
@@ -34,7 +18,7 @@ const SideBarLinks = () => {
           borderRight: '2px solid #ceced3',
         }}
       >
-        {urlLinksProd.map((link) => (
+        {navLinksData.map((link) => (
           <Box
             component="li"
             sx={{
@@ -50,7 +34,7 @@ const SideBarLinks = () => {
                 p: '1.5rem',
                 transition: 'ease-in-out 300ms',
                 borderRadius: '4px',
-                background: pathname === `/${link.name}` ? '#ceced3' : null,
+                background: pathname === link.url ? '#ceced3' : null,
 
                 '&:hover': {
                   background: '#ceced3',

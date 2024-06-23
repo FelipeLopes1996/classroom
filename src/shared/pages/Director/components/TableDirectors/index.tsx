@@ -11,9 +11,10 @@ import {
 } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { IDirector, directors } from '../../../../../api/api';
+import { directors } from '../../../../../api/api';
 import { useCallback, useState } from 'react';
 import DeleteModal from '../../../../components/DeleteModal';
+import { IDirector } from '../../../../types/IDirector';
 
 const tableHeads: string[] = ['Nome', 'Super Usuário', 'Ações'];
 
@@ -34,7 +35,6 @@ const TableDirectors = ({
 
   const handleGetDirector = (director: IDirector) => {
     setDirectorEditData(director);
-    console.log(director);
   };
 
   const handleGetIdOpenModal = (id: number) => {
@@ -114,7 +114,7 @@ const TableDirectors = ({
         open={openModal}
         setOpen={setOpenModal}
         title={'Excluir Diretor'}
-        informationText={'Deseja realmente excluir o diretors'}
+        informationText={'Deseja realmente excluir o diretor?'}
         handleDelete={handleDelete}
         loading={loading}
       />

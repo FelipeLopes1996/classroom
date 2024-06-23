@@ -6,7 +6,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { IDirector, directors } from '../../../../../api/api';
+import { directors } from '../../../../../api/api';
+import { IDirector } from '../../../../types/IDirector';
 
 interface ICreateDirector {
   name: string;
@@ -103,7 +104,6 @@ const CreateAndEditDirectorForm = ({
       return setDataDirector({ name: directorEditData?.nome });
   }, [directorEditData]);
 
-  console.log(dataDirector);
   return (
     <Box
       component="form"
