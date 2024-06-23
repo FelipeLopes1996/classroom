@@ -10,12 +10,12 @@ import { NavLink, useLocation } from 'react-router-dom';
 const urlLinksProd = [
   {
     name: 'Diretores',
-    url: `${process.env.REACT_APP_API_URL}/diretores`,
+    url: `/diretores`,
   },
-  { name: 'Alunos', url: `${process.env.REACT_APP_API_URL}/alunos` },
+  { name: 'Alunos', url: `/alunos` },
   {
     name: 'Sala de aula',
-    url: `${process.env.REACT_APP_API_URL}/salas`,
+    url: `/salas`,
   },
 ];
 

@@ -1,5 +1,8 @@
 import axios, { AxiosResponse } from 'axios';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+// const API_URL: string = import.meta.env.REACT_APP_API_URL;
+
 const config = {
   headers: {
     'Access-Control-Allow-Origin': '*',
@@ -11,8 +14,8 @@ const config = {
 // const
 
 const instance = axios.create({
-  // baseURL: 'http://localhost:8090/',
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: 'http://localhost:8090/',
+  // baseURL: API_URL,
   timeout: 15000,
   headers: config.headers,
   withCredentials: true,
