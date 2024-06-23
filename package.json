@@ -12,13 +12,13 @@
     "preinstall": "if [ \"$NETLIFY\" == \"true\" ]; then npm uninstall @rollup/rollup-win32-x64-msvc; fi"
   },
   "optionalDependencies": {
-    "fsevents": "*",
+    "@rollup/rollup-win32-x64-msvc": "4.18.0",
     "esbuild-android-64": "0.14.32",
     "esbuild-android-arm64": "0.14.32",
     "esbuild-darwin-64": "0.14.32",
     "esbuild-darwin-arm64": "0.14.32",
     "esbuild-freebsd-64": "0.14.32",
-    "@rollup/rollup-win32-x64-msvc": "4.18.0"
+    "fsevents": "*"
   },
   "node_modules/esbuild-windows-64": {
     "version": "0.14.32",
@@ -42,9 +42,9 @@
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
     "@mui/styled-engine-sc": "^6.0.0-alpha.18",
-    "@rollup/rollup-win32-x64-msvc": "^4.9.6",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.3",
     "react": "^18.2.0",

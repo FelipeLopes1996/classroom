@@ -10,12 +10,12 @@ import { NavLink, useLocation } from 'react-router-dom';
 const urlLinksProd = [
   {
     name: 'Diretores',
-    url: 'https://controle-sala-de-turmas.netlify.app/diretores',
+    url: `${process.env.REACT_APP_API_URL}/diretores`,
   },
-  { name: 'Alunos', url: 'https://controle-sala-de-turmas.netlify.app/alunos' },
+  { name: 'Alunos', url: `${process.env.REACT_APP_API_URL}/alunos` },
   {
     name: 'Sala de aula',
-    url: 'https://controle-sala-de-turmas.netlify.app/salas',
+    url: `${process.env.REACT_APP_API_URL}/salas`,
   },
 ];
 

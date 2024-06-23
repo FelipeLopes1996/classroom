@@ -11,8 +11,8 @@ const config = {
 // const
 
 const instance = axios.create({
-  baseURL: 'http://localhost:8090/',
-  // baseURL: process.env.API_URL,
+  // baseURL: 'http://localhost:8090/',
+  baseURL: process.env.REACT_APP_API_URL,
   timeout: 15000,
   headers: config.headers,
   withCredentials: true,
