@@ -6,8 +6,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { directors } from '../../../../../api/api';
 import { IDirector } from '../../../../types/IDirector';
+import { directors } from '../../../../../api/services/directors/request';
 
 interface ICreateDirector {
   name: string;

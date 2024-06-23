@@ -7,11 +7,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { directors } from '../../../api/api';
 import WrapperContainer from '../../components/WrapperContainer';
 import CreateAndEditDirectorForm from './components/CreateAndEditDirectorForm';
 import TableDirectors from './components/TableDirectors';
 import { IDirector } from '../../types/IDirector';
+import { directors } from '../../../api/services/directors/request';
 
 const Director = () => {
   const [directorsData, setDirectorsData] = useState<IDirector[]>([]);

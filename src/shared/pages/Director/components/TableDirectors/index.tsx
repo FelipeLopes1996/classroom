@@ -11,10 +11,10 @@ import {
 } from '@mui/material';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { directors } from '../../../../../api/api';
 import { useCallback, useState } from 'react';
 import DeleteModal from '../../../../components/DeleteModal';
 import { IDirector } from '../../../../types/IDirector';
+import { directors } from '../../../../../api/services/directors/request';
 
 const tableHeads: string[] = ['Nome', 'Super Usuário', 'Ações'];
 
