@@ -2,18 +2,12 @@ import axios, { AxiosResponse } from 'axios';
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
-const config = {
-  headers: {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-    'Content-Type': 'application/json',
-  },
-};
-
 const instance = axios.create({
   baseURL: API_URL,
   timeout: 15000,
-  headers: config.headers,
+  headers: {
+    'Content-Type': 'application/json',
+  },
   withCredentials: true,
 });
 
