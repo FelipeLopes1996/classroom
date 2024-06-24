@@ -6,3 +6,7 @@
   [build]
   command = "vite build"
   publish = "dist"
+
+  [context.production.environment]
+  VITE_APP_URL = "https://controle-sala-de-turmas.netlify.app"
+  VITE_APP_API_URL = "https://projeto-sala-de-aula.onrender.com"
