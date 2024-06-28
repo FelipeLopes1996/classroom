@@ -1,7 +1,6 @@
 import {
   Alert,
   Box,
-  Button,
   CircularProgress,
   Snackbar,
   Typography,
@@ -12,6 +11,7 @@ import CreateAndEditDirectorForm from './components/CreateAndEditDirectorForm';
 import TableDirectors from './components/TableDirectors';
 import { IDirector } from '../../types/IDirector';
 import { directors } from '../../../api/services/directors/request';
+import IsData from '../../components/IsData';
 
 const Director = () => {
   const [directorsData, setDirectorsData] = useState<IDirector[]>([]);
@@ -68,23 +68,7 @@ const Director = () => {
         />
       ) : null}
       {!loading && !directorsData?.length && !showForm && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            border: '1px solid #ceced3',
-            borderRadius: '4px',
-            p: '2.5rem',
-            mt: '2rem',
-            gap: '2rem',
-          }}
-        >
-          <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-            Ainda não há um diretor
-          </Typography>
-          <Button onClick={() => setShowForm(true)}>Adicionar</Button>
-        </Box>
+        <IsData title="Ainda não há um diretor" setShowForm={setShowForm} />
       )}
       {showForm && (
         <CreateAndEditDirectorForm

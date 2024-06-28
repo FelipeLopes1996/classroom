@@ -4,6 +4,7 @@ import Home from '../shared/pages/Home';
 import PageNotFound from '../shared/pages/PageNotFound';
 import Director from '../shared/pages/Director';
 import App from '..';
+import Students from '../shared/pages/Students';
 
 const pagesRoutes = [
   {
@@ -22,6 +23,10 @@ const pagesRoutes = [
       {
         path: '/diretores',
         element: <Director />,
+      },
+      {
+        path: '/alunos',
+        element: <Students />,
       },
     ],
   },
