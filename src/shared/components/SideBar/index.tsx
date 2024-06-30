@@ -24,7 +24,8 @@ const SideBarLinks = () => {
           display: 'flex',
           justifyContent: 'end',
           transition: 'ease-in-out 300ms',
-          borderRight: openNav ? '2px solid #ceced3' : '',
+          borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
+          borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           borderRadius: 0,
         }}
         size="large"
@@ -43,7 +44,8 @@ const SideBarLinks = () => {
           m: 0,
           p: '0.5rem 0.5rem 0',
           zIndex: 1,
-          borderRight: openNav ? '2px solid #ceced3' : '',
+          borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
+          borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           top: 110,
           overflow: 'hidden',
           height: 'calc(100vh - 11rem)',

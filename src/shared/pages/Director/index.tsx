@@ -8,10 +8,10 @@ import {
 import { useEffect, useState } from 'react';
 import WrapperContainer from '../../components/WrapperContainer';
 import CreateAndEditDirectorForm from './components/CreateAndEditDirectorForm';
-import TableDirectors from './components/TableDirectors';
 import { IDirector } from '../../types/IDirector';
 import { directors } from '../../../api/services/directors/request';
 import IsData from '../../components/IsData';
+import CardDirector from './components/CardDirector';
 
 const Director = () => {
   const [directorsData, setDirectorsData] = useState<IDirector[]>([]);
@@ -54,19 +54,22 @@ const Director = () => {
 
   return (
     <WrapperContainer>
-      <Typography sx={{ fontSize: '2.5rem' }}>Diretores</Typography>
+      <Typography sx={{ fontSize: '2.5rem' }}>Diretor</Typography>
       {loading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: '8rem' }}>
           <CircularProgress size={50} />
         </Box>
       )}
-      {!loading && directorsData?.length && !directorEditData?.nome ? (
-        <TableDirectors
-          directorsData={directorsData}
-          setDirectorsData={setDirectorsData}
-          setDirectorEditData={setDirectorEditData}
-        />
-      ) : null}
+      {!loading && directorsData?.length && !directorEditData?.nome
+        ? directorsData.map((director) => (
+            <CardDirector
+              key={director.id}
+              directorData={director}
+              setDirectorsData={setDirectorsData}
+              setDirectorEditData={setDirectorEditData}
+            />
+          ))
+        : null}
       {!loading && !directorsData?.length && !showForm && (
         <IsData title="Ainda não há um diretor" setShowForm={setShowForm} />
       )}

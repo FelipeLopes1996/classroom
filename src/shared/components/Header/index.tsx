@@ -9,11 +9,23 @@ export default function Header() {
         backgroundColor: '#FFF',
         p: '2rem',
         borderBottom: '2px solid #ceced3',
+        width: '100%',
       }}
     >
-      <Typography variant="h4" sx={{ color: '#232426' }}>
-        Cadastro do projetinho do meu amor
-      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          maxWidth: '1200px',
+          '@media screen and (min-width: 1200px)': {
+            margin: '0 auto',
+            width: '100%',
+          },
+        }}
+      >
+        <Typography variant="h4" sx={{ color: '#232426' }}>
+          Cadastro do projetinho do meu amor
+        </Typography>
+      </Box>
     </Box>
   );
 }

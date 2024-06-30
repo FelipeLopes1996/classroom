@@ -7,6 +7,6 @@ describe('Header Component tests', () => {
     render(<Header />);
 
     const headerText = screen.getByTestId('title').textContent;
-    expect(headerText).toBe('On GPS');
+    expect(headerText).toBe('on app');
   });
 });

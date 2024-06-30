@@ -21,7 +21,17 @@ const App = () => {
       }}
     >
       <Header />
-      <Box sx={{ display: 'flex', flexGrow: 1 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexGrow: 1,
+          maxWidth: '1200px',
+          '@media screen and (min-width: 1200px)': {
+            margin: '0 auto',
+            width: '100%',
+          },
+        }}
+      >
         <SideBarLinks />
         <Outlet />
       </Box>
