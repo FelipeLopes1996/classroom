@@ -13,6 +13,12 @@ const style = {
   borderRadius: '4px',
   boxShadow: 24,
   p: '1.5rem',
+  '@media screen and (max-width: 1200px)': {
+    width: '70%',
+  },
+  '@media screen and (max-width: 480px)': {
+    width: '90%',
+  },
 };
 
 interface IDeleteModal {
