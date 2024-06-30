@@ -106,17 +106,25 @@ const CardDirector = ({
         </CardContent>
         <CardActions sx={{ justifyContent: 'end', padding: '1.5rem 0 0 0' }}>
           <IconButton
-            sx={{ padding: '0', mr: '0.5rem' }}
+            disableRipple
+            sx={{
+              mr: '0.5rem',
+              '&:hover': { background: 'none' },
+            }}
             onClick={() => handleGetDirector(directorData)}
           >
             <EditOutlinedIcon fontSize="large" sx={{ color: '#3d93e8' }} />
           </IconButton>
           <IconButton
+            disableRipple
+            sx={{ '&:hover': { background: 'none' } }}
             onClick={() => handleGetIdOpenModal(Number(directorData.id))}
           >
             <DeleteOutlineOutlinedIcon
               fontSize="large"
-              sx={{ color: '#e71717', pl: 0 }}
+              sx={{
+                color: '#e71717',
+              }}
             />
           </IconButton>
         </CardActions>

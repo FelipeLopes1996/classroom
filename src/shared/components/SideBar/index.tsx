@@ -3,6 +3,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { navLinksData } from '../../utils/navLinksData';
 import { useState } from 'react';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const SideBarLinks = () => {
   const { pathname } = useLocation();
@@ -16,6 +17,7 @@ const SideBarLinks = () => {
       }}
     >
       <IconButton
+        disableRipple
         sx={{
           width: openNav ? '23rem' : '4.5rem',
           position: 'absolute',
@@ -27,11 +29,16 @@ const SideBarLinks = () => {
           borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           borderRadius: 0,
+          '&:hover': { background: 'none' },
         }}
         size="large"
         onClick={() => setOpenNav(!openNav)}
       >
-        <MenuOutlinedIcon fontSize="large" />
+        {openNav ? (
+          <CloseOutlinedIcon fontSize="large" />
+        ) : (
+          <MenuOutlinedIcon fontSize="large" />
+        )}
       </IconButton>
       <Box
         component="ul"
