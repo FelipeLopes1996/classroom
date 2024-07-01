@@ -12,14 +12,18 @@ import { IDirector } from '../../types/IDirector';
 import { directors } from '../../../api/services/directors/request';
 import IsData from '../../components/IsData';
 import CardDirector from './components/CardDirector';
+import { useDirectorId } from '../../context/DirectorProvider';
 
 const Director = () => {
+  const { directorId } = useDirectorId();
   const [directorsData, setDirectorsData] = useState<IDirector[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [open, setOpen] = useState(false);
   const [snackbarText, setSnackbarText] = useState('');
   const [loading, setLoading] = useState(false);
   const [directorEditData, setDirectorEditData] = useState<IDirector>();
+
+  console.log('directorId', directorId);
 
   useEffect(() => {
     setLoading(true);
@@ -67,6 +71,8 @@ const Director = () => {
               directorData={director}
               setDirectorsData={setDirectorsData}
               setDirectorEditData={setDirectorEditData}
+              setSnackbarText={setSnackbarText}
+              setOpen={setOpen}
             />
           ))
         : null}
@@ -91,7 +97,7 @@ const Director = () => {
       >
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity={snackbarText.includes('excluído') ? 'error' : 'success'}
           variant="filled"
           sx={{ width: '100%', fontSize: '1.5rem' }}
         >

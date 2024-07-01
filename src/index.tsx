@@ -2,14 +2,25 @@ import { Outlet } from 'react-router-dom';
 import Header from './shared/components/Header';
 import { Box } from '@mui/material';
 import SideBarLinks from './shared/components/SideBar';
-
-const API_URL = import.meta.env.VITE_APP_API_URL;
-const APP_URL = import.meta.env.VITE_APP_URL;
-
-console.log(API_URL);
-console.log(APP_URL);
+import { useDirectorId } from './shared/context/DirectorProvider';
+import { useEffect } from 'react';
+import { directors } from './api/services/directors/request';
 
 const App = () => {
+  const { directorId, setDirectorId } = useDirectorId();
+
+  useEffect(() => {
+    directors
+      .getDirectors()
+      .then((data) => {
+        setDirectorId(data.length ? Number(data[0].id) : 0);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [setDirectorId]);
+
+  console.log('oi app', directorId);
   return (
     <Box
       sx={{

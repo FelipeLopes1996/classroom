@@ -5,11 +5,16 @@ import PageNotFound from '../shared/pages/PageNotFound';
 import Director from '../shared/pages/Director';
 import App from '..';
 import Students from '../shared/pages/Students';
+import { DirectorProvider } from '../shared/context/DirectorProvider';
 
 const pagesRoutes = [
   {
     path: '/',
-    element: <App />,
+    element: (
+      <DirectorProvider>
+        <App />
+      </DirectorProvider>
+    ),
     errorElement: <PageNotFound />,
     children: [
       {

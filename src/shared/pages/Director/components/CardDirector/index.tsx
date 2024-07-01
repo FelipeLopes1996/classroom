@@ -11,20 +11,26 @@ import DeleteModal from '../../../../components/DeleteModal';
 import { useCallback, useState } from 'react';
 import { directors } from '../../../../../api/services/directors/request';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
+import { useDirectorId } from '../../../../context/DirectorProvider';
 
 interface ICardDirector {
   directorData: IDirector;
   setDirectorsData: (value: (prevState: IDirector[]) => IDirector[]) => void;
   setDirectorEditData: (value: IDirector) => void;
+  setOpen: (value: boolean) => void;
+  setSnackbarText: (value: string) => void;
 }
 
 const CardDirector = ({
   directorData,
   setDirectorsData,
   setDirectorEditData,
+  setSnackbarText,
+  setOpen,
 }: ICardDirector) => {
+  const { setDirectorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
-  const [directorId, setDirectorId] = useState(0);
+  const [id, setId] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handleGetDirector = (director: IDirector) => {
@@ -32,24 +38,27 @@ const CardDirector = ({
   };
 
   const handleGetIdOpenModal = (id: number) => {
-    setDirectorId(id);
+    setId(id);
     setOpenModal(true);
   };
 
   const handleDelete = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
-      if (directorId) {
-        await directors.deleteDirector(directorId);
+      if (id) {
+        await directors.deleteDirector(id);
         setDirectorsData((prevState) =>
-          prevState.filter((state) => state.id !== directorId)
+          prevState.filter((state) => state.id !== id)
         );
+        setDirectorId(0);
+        setSnackbarText('Diretor excluído com sucesso!');
+        setOpen(true);
         setLoading(false);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [setDirectorsData, directorId]);
+  }, [id, setDirectorsData, setDirectorId, setSnackbarText, setOpen]);
 
   return (
     <Box sx={{ maxWidth: 350, m: '2rem auto 0' }}>

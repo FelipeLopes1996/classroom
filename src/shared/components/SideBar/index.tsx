@@ -50,7 +50,7 @@ const SideBarLinks = () => {
           listStyle: 'none',
           m: 0,
           p: '0.5rem 0.5rem 0',
-          zIndex: 1,
+          zIndex: 9,
           borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           top: 110,

@@ -15,6 +15,7 @@ import { useCallback, useState } from 'react';
 import DeleteModal from '../../../../components/DeleteModal';
 import { IDirector } from '../../../../types/IDirector';
 import { directors } from '../../../../../api/services/directors/request';
+import { useDirectorId } from '../../../../context/DirectorProvider';
 
 const tableHeads: string[] = ['Nome', 'Super Usuário', 'Ações'];
 
@@ -29,8 +30,9 @@ const TableDirectors = ({
   setDirectorsData,
   setDirectorEditData,
 }: ITable) => {
+  const { directorId, setDirectorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
-  const [directorId, setDirectorId] = useState(0);
+  const [id, setId] = useState(0);
   const [loading, setLoading] = useState(false);
 
   const handleGetDirector = (director: IDirector) => {
@@ -38,24 +40,28 @@ const TableDirectors = ({
   };
 
   const handleGetIdOpenModal = (id: number) => {
-    setDirectorId(id);
+    setId(id);
     setOpenModal(true);
   };
 
   const handleDelete = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
-      if (directorId) {
-        await directors.deleteDirector(directorId);
+      if (id) {
+        setDirectorId(Number(0));
+        console.log('oi dellet', directorId);
+        const resp = await directors.deleteDirector(id);
+        console.log('respt', resp);
         setDirectorsData((prevState) =>
-          prevState.filter((state) => state.id !== directorId)
+          prevState.filter((state) => state.id !== id)
         );
         setLoading(false);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [setDirectorsData, directorId]);
+  }, [id, setDirectorId, directorId, setDirectorsData]);
+  console.log('oi dellet', directorId);
 
   return (
     <Box sx={{ mt: '2rem' }}>

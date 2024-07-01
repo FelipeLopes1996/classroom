@@ -8,6 +8,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { IDirector } from '../../../../types/IDirector';
 import { directors } from '../../../../../api/services/directors/request';
+import { useDirectorId } from '../../../../context/DirectorProvider';
 
 interface ICreateDirector {
   name: string;
@@ -36,6 +37,7 @@ const CreateAndEditDirectorForm = ({
   directorEditData,
   setDirectorEditData,
 }: IForm) => {
+  const { setDirectorId } = useDirectorId();
   const [dataDirector, setDataDirector] = useState<ICreateDirector>({
     name: '',
   });
@@ -67,6 +69,7 @@ const CreateAndEditDirectorForm = ({
                 nome: dataDirector.name,
                 superUsuario: true,
               });
+          setDirectorId(Number(resp.id));
           setDirectorsData((prevState) => prevState.slice(1));
           setDirectorsData((prevState) => [...prevState, resp]);
           setSnackbarText(
@@ -88,14 +91,16 @@ const CreateAndEditDirectorForm = ({
       }
     },
     [
-      dataDirector,
-      directorEditData,
-      setShowForm,
-      setError,
+      dataDirector.name,
+      directorEditData?.nome,
+      directorEditData?.superUsuario,
+      directorEditData?.id,
+      setDirectorId,
       setDirectorsData,
       setSnackbarText,
-      setOpen,
       handleCancel,
+      setShowForm,
+      setOpen,
     ]
   );
 
