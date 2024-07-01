@@ -91,7 +91,13 @@ const Students = () => {
       >
         {!loading && studentData.length && !showForm
           ? studentData.map((student) => (
-              <CardStudent key={student.id} studentData={student} />
+              <CardStudent
+                key={student.id}
+                studentData={student}
+                setStudentsData={setStudentData}
+                setSnackbarText={setSnackbarText}
+                setOpen={setOpen}
+              />
             ))
           : null}
       </Box>

@@ -12,45 +12,52 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 // import { directors } from '../../../../../api/services/directors/request';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
 import { IStudent } from '../../../../types/IStudent';
+import { student } from '../../../../../api/services/students';
+import DeleteModal from '../../../../components/DeleteModal';
+import { useCallback, useState } from 'react';
 
 interface ICardStudent {
   studentData: IStudent;
-  // setDirectorsData: (value: (prevState: IDirector[]) => IDirector[]) => void;
-  // setDirectorEditData: (value: IDirector) => void;
+  setStudentsData: (value: (prevState: IStudent[]) => IStudent[]) => void;
+  setOpen: (value: boolean) => void;
+  setSnackbarText: (value: string) => void;
 }
 
 const CardStudent = ({
   studentData,
-  // setDirectorsData,
-  // setDirectorEditData,
+  setStudentsData,
+  setSnackbarText,
+  setOpen,
 }: ICardStudent) => {
-  // const [openModal, setOpenModal] = useState(false);
-  // const [directorId, setDirectorId] = useState(0);
-  // const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [studentId, setStudentId] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   // const handleGetDirector = (director: IDirector) => {
   //   setDirectorEditData(director);
   // };
 
-  // const handleGetIdOpenModal = (id: number) => {
-  //   setDirectorId(id);
-  //   setOpenModal(true);
-  // };
+  const handleGetIdOpenModal = (id: number) => {
+    setStudentId(id);
+    setOpenModal(true);
+  };
 
-  // const handleDelete = useCallback(async (): Promise<void> => {
-  //   setLoading(true);
-  //   try {
-  //     if (directorId) {
-  //       await directors.deleteDirector(directorId);
-  //       setDirectorsData((prevState) =>
-  //         prevState.filter((state) => state.id !== directorId)
-  //       );
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, [setDirectorsData, directorId]);
+  const handleDelete = useCallback(async (): Promise<void> => {
+    setLoading(true);
+    try {
+      if (studentId) {
+        await student.deleteStudent(studentId);
+        setStudentsData((prevState) =>
+          prevState.filter((student) => student.id !== studentId)
+        );
+        setSnackbarText('Aluno excluído com sucesso!');
+        setOpen(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [setOpen, setSnackbarText, setStudentsData, studentId]);
 
   return (
     // <Box sx={{ maxWidth: 350 }}>
@@ -159,19 +166,21 @@ const CardStudent = ({
         </CardContent>
         <CardActions sx={{ justifyContent: 'end', padding: '1.5rem 0 0 0' }}>
           <IconButton
+            disabled={true}
             disableRipple
             sx={{
               mr: '0.5rem',
+              color: '#3d93e8',
               '&:hover': { background: 'none' },
             }}
             // onClick={() => handleGetDirector(directorData)}
           >
-            <EditOutlinedIcon fontSize="large" sx={{ color: '#3d93e8' }} />
+            <EditOutlinedIcon fontSize="large" />
           </IconButton>
           <IconButton
             disableRipple
             sx={{ '&:hover': { background: 'none' } }}
-            // onClick={() => handleGetIdOpenModal(Number(directorData.id))}
+            onClick={() => handleGetIdOpenModal(Number(studentData.id))}
           >
             <DeleteOutlineOutlinedIcon
               fontSize="large"
@@ -182,14 +191,14 @@ const CardStudent = ({
           </IconButton>
         </CardActions>
       </Card>
-      {/* <DeleteModal
+      <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
-        title={'Excluir Diretor'}
-        informationText={'Deseja realmente excluir o diretor?'}
+        title={'Excluir Aluno'}
+        informationText={'Deseja realmente excluir o aluno?'}
         handleDelete={handleDelete}
         loading={loading}
-      /> */}
+      />
     </Box>
   );
 };
