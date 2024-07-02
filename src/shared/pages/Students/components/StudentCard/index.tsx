@@ -100,7 +100,7 @@ const CardStudent = ({
             variant="h5"
             component="div"
           >
-            Super usuário
+            Data de nascimento
           </Typography>
           <Typography
             sx={{
