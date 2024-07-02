@@ -84,7 +84,7 @@ const Students = () => {
             Adicionar
           </Button>
         ) : null}
-        {!showForm && studentData?.length && !directorId ? (
+        {!showForm && !directorId ? (
           <Box
             sx={{
               display: 'flex',
@@ -142,9 +142,10 @@ const Students = () => {
             ))
           : null}
       </Box>
-      {!loading && !studentData?.length && !showForm && (
+      {!loading && !studentData?.length && !showForm && directorId ? (
         <IsData title="Ainda não há aluno" setShowForm={setShowForm} />
-      )}
+      ) : null}
+
       {showForm && (
         <CreateOrEditStudentForm
           setShowForm={setShowForm}
