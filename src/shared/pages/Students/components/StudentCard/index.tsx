@@ -15,6 +15,7 @@ import { IStudent } from '../../../../types/IStudent';
 import { student } from '../../../../../api/services/students';
 import DeleteModal from '../../../../components/DeleteModal';
 import { useCallback, useState } from 'react';
+import { useDirectorId } from '../../../../context/DirectorProvider';
 
 interface ICardStudent {
   studentData: IStudent;
@@ -29,6 +30,7 @@ const CardStudent = ({
   setSnackbarText,
   setOpen,
 }: ICardStudent) => {
+  const { directorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
   const [studentId, setStudentId] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -178,16 +180,12 @@ const CardStudent = ({
             <EditOutlinedIcon fontSize="large" />
           </IconButton>
           <IconButton
+            disabled={!directorId}
             disableRipple
-            sx={{ '&:hover': { background: 'none' } }}
+            sx={{ color: '#e71717', '&:hover': { background: 'none' } }}
             onClick={() => handleGetIdOpenModal(Number(studentData.id))}
           >
-            <DeleteOutlineOutlinedIcon
-              fontSize="large"
-              sx={{
-                color: '#e71717',
-              }}
-            />
+            <DeleteOutlineOutlinedIcon fontSize="large" />
           </IconButton>
         </CardActions>
       </Card>
