@@ -58,25 +58,62 @@ const Students = () => {
     <WrapperContainer>
       <Box
         sx={{
+          position: 'relative',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
+          '@media screen and (max-width: 650px)': {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'start',
+          },
         }}
       >
         <Typography sx={{ fontSize: '2.5rem' }}>Alunos</Typography>
         {!showForm && studentData?.length && directorId ? (
-          <Button onClick={() => setShowForm(true)}>Adicionar</Button>
-        ) : (
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <Button
+            sx={{
+              '@media screen and (max-width: 650px)': {
+                position: 'absolute',
+                right: 0,
+                top: -4,
+              },
+            }}
+            onClick={() => setShowForm(true)}
+          >
+            Adicionar
+          </Button>
+        ) : null}
+        {!showForm && studentData?.length && !directorId ? (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '2rem',
+              '@media screen and (max-width: 650px)': {
+                width: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                mt: '2rem',
+                gap: '1rem',
+              },
+            }}
+          >
             <Typography sx={{ fontSize: '1.5rem' }}>
               Você ainda não tem um diretor:
             </Typography>
-            <Button onClick={handleGoDirector}>Clique para adicionar</Button>
+            <Button onClick={handleGoDirector}>Adicionar diretor</Button>
           </Box>
-        )}
+        ) : null}
       </Box>
       {loading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: '8rem' }}>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            mt: '8rem',
+          }}
+        >
           <CircularProgress size={50} />
         </Box>
       )}
@@ -86,7 +123,11 @@ const Students = () => {
           mt: '2.5rem',
           display: 'grid',
           gap: '2rem',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns:
+            'repeat(auto-fit, minmax(min(80%/2, max(350px, 80%/3)), 356px))',
+          '@media screen and (max-width: 1200px)': {
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          },
         }}
       >
         {!loading && studentData.length && !showForm

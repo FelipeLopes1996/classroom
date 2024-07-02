@@ -2,7 +2,7 @@ import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 
 export const navLinksData = [
   {
-    name: 'Diretores',
+    name: 'Diretor',
     icon: '',
     url: `/diretores`,
   },
