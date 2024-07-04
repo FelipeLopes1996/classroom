@@ -6,10 +6,6 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-// import { IDirector } from '../../../../types/IDirector';
-// import DeleteModal from '../../../../components/DeleteModal';
-// import { useCallback, useState } from 'react';
-// import { directors } from '../../../../../api/services/directors/request';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
 import { IStudent } from '../../../../types/IStudent';
 import { student } from '../../../../../api/services/students';
@@ -22,6 +18,7 @@ interface ICardStudent {
   setStudentsData: (value: (prevState: IStudent[]) => IStudent[]) => void;
   setOpen: (value: boolean) => void;
   setSnackbarText: (value: string) => void;
+  setStudentEditData: (value: IStudent) => void;
 }
 
 const CardStudent = ({
@@ -29,15 +26,16 @@ const CardStudent = ({
   setStudentsData,
   setSnackbarText,
   setOpen,
+  setStudentEditData,
 }: ICardStudent) => {
   const { directorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
   const [studentId, setStudentId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // const handleGetDirector = (director: IDirector) => {
-  //   setDirectorEditData(director);
-  // };
+  const handleGetStudent = (student: IStudent) => {
+    setStudentEditData(student);
+  };
 
   const handleGetIdOpenModal = (id: number) => {
     setStudentId(id);
@@ -62,7 +60,6 @@ const CardStudent = ({
   }, [setOpen, setSnackbarText, setStudentsData, studentId]);
 
   return (
-    // <Box sx={{ maxWidth: 350 }}>
     <Box>
       <Card variant="outlined" sx={{ p: '2rem' }}>
         <CardHeader
@@ -148,7 +145,7 @@ const CardStudent = ({
           >
             {studentData.matricula}
           </Typography>
-          <Typography
+          {/* <Typography
             sx={{ mb: '0.5rem', mt: '1.5rem' }}
             variant="h5"
             component="div"
@@ -164,18 +161,18 @@ const CardStudent = ({
             gutterBottom
           >
             {studentData.sala_de_aula ? studentData.sala_de_aula : '-'}
-          </Typography>
+          </Typography> */}
         </CardContent>
         <CardActions sx={{ justifyContent: 'end', padding: '1.5rem 0 0 0' }}>
           <IconButton
-            disabled={true}
+            disabled={!directorId}
             disableRipple
             sx={{
               mr: '0.5rem',
               color: '#3d93e8',
               '&:hover': { background: 'none' },
             }}
-            // onClick={() => handleGetDirector(directorData)}
+            onClick={() => handleGetStudent(studentData)}
           >
             <EditOutlinedIcon fontSize="large" />
           </IconButton>

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { directors } from './api/services/directors/request';
 
 const App = () => {
-  const { directorId, setDirectorId } = useDirectorId();
+  const { setDirectorId } = useDirectorId();
 
   useEffect(() => {
     directors
@@ -20,7 +20,6 @@ const App = () => {
       });
   }, [setDirectorId]);
 
-  console.log('oi app', directorId);
   return (
     <Box
       sx={{

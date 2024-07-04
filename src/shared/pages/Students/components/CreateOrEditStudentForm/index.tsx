@@ -10,7 +10,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
@@ -24,13 +24,26 @@ interface IForm {
   setStudentsData: (value: (prevState: IStudent[]) => IStudent[]) => void;
   setOpen: (value: boolean) => void;
   setSnackbarText: (value: string) => void;
+  studentEditData?: IStudent;
+  setStudentEditData?: (value: IStudent) => void;
 }
+
+const getEmptyStudent = (): IStudent => ({
+  id: 0,
+  matricula: '',
+  nome: '',
+  idade: 0,
+  dataNascimento: null,
+  sexo: '',
+});
 
 const CreateOrEditStudentForm = ({
   setShowForm,
   setStudentsData,
   setSnackbarText,
   setOpen,
+  setStudentEditData,
+  studentEditData,
 }: IForm) => {
   const { directorId } = useDirectorId();
 
@@ -46,11 +59,10 @@ const CreateOrEditStudentForm = ({
 
   const handleCancel = useCallback(() => {
     setShowForm(false);
-    // if (setDirectorEditData) {
-    //   setDirectorEditData(getEmptyDirector());
-    // }
-    // }, [setDirectorEditData, setShowForm]);
-  }, [setShowForm]);
+    if (setStudentEditData) {
+      setStudentEditData(getEmptyStudent());
+    }
+  }, [setStudentEditData, setShowForm]);
 
   const onChangeStudentForm = useCallback(
     (
@@ -93,19 +105,32 @@ const CreateOrEditStudentForm = ({
       }
 
       try {
-        const resp = await student.createStudent(newStudent);
-        // setDirectorsData((prevState) => [...prevState, resp]);
+        const resp = !studentEditData?.nome
+          ? await student.createStudent(newStudent)
+          : await student.updateStudent(
+              newStudent,
+              Number(studentEditData?.id)
+            );
         handleCancel();
         setShowForm(false);
         setLoading(false);
         setOpen(true);
-        // setSnackbarText(
-        //   directorEditData?.superUsuario
-        //     ? 'Aluno alteraddo com sucesso!'
-        //     : 'Aluno criado com sucesso!'
-        // )
-        setSnackbarText('Aluno criado com sucesso!');
-        setStudentsData((prevState) => [...prevState, resp]);
+        setSnackbarText(
+          studentEditData?.nome
+            ? 'Aluno alteraddo com sucesso!'
+            : 'Aluno criado com sucesso!'
+        );
+        if (!studentEditData?.nome) {
+          setStudentsData((prevState) => [...prevState, resp]);
+        } else {
+          setStudentsData((prevState) =>
+            prevState.map((student) =>
+              student?.id === studentEditData?.id
+                ? { ...newStudent, id: studentEditData?.id }
+                : student
+            )
+          );
+        }
       } catch (error) {
         console.error(error);
         setLoading(false);
@@ -122,9 +147,15 @@ const CreateOrEditStudentForm = ({
       setShowForm,
       setOpen,
       setSnackbarText,
+      studentEditData,
       setStudentsData,
     ]
   );
+
+  useEffect(() => {
+    if (studentEditData?.nome && !studentData.nome)
+      return setStudentData(studentEditData);
+  }, [studentEditData, studentData, setStudentsData]);
 
   return (
     <Box
@@ -141,8 +172,7 @@ const CreateOrEditStudentForm = ({
       onSubmit={(e) => void handleSubmit(e)}
     >
       <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-        {/* {!directorEditData?.nome ? 'Criar Aluno' : 'Editar Aluno'} */}
-        {'Criar Aluno'}
+        {!studentEditData?.nome ? 'Criar Aluno' : 'Editar Aluno'}
       </Typography>
       <Box
         sx={{
@@ -219,7 +249,7 @@ const CreateOrEditStudentForm = ({
           }}
           label="Matricula"
         />
-        <TextField
+        {/* <TextField
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             onChangeStudentForm(e)
           }
@@ -231,7 +261,7 @@ const CreateOrEditStudentForm = ({
             flexDirection: 'column',
           }}
           label="Sala (opcional)"
-        />
+        /> */}
         <Box sx={{ display: 'flex', gap: ' 1.5rem' }}>
           <Button
             onClick={() => handleCancel()}
@@ -261,8 +291,7 @@ const CreateOrEditStudentForm = ({
             disabled={loading}
           >
             {!loading ? (
-              // `${!directorEditData?.nome ? 'Adicionar' : 'Salvar'}`
-              'Adicionar'
+              `${!studentEditData?.nome ? 'Adicionar' : 'Salvar'}`
             ) : (
               <CircularProgress size={20} />
             )}

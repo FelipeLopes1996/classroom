@@ -20,14 +20,12 @@ const Students = () => {
   const { directorId } = useDirectorId();
   const [studentData, setStudentData] = useState<IStudent[]>([]);
   const [showForm, setShowForm] = useState(false);
-  // const [open, setOpen] = useState(false);
-  // const [snackbarText, setSnackbarText] = useState('');
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [snackbarText, setSnackbarText] = useState('');
   const navigate = useNavigate();
   const handleGoDirector = () => navigate('/diretores');
-  // const [studentEditData, setStudentEditData] = useState<IStudent>();;
+  const [studentEditData, setStudentEditData] = useState<IStudent>();
 
   useEffect(() => {
     setLoading(true);
@@ -54,6 +52,12 @@ const Students = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (!showForm && studentData && studentEditData?.nome) {
+      setShowForm(true);
+    }
+  }, [showForm, studentData, studentData.length, studentEditData]);
+
   return (
     <WrapperContainer>
       <Box
@@ -70,7 +74,10 @@ const Students = () => {
         }}
       >
         <Typography sx={{ fontSize: '2.5rem' }}>Alunos</Typography>
-        {!showForm && studentData?.length && directorId ? (
+        {!showForm &&
+        studentData?.length &&
+        directorId &&
+        !studentEditData?.nome ? (
           <Button
             sx={{
               '@media screen and (max-width: 650px)': {
@@ -130,7 +137,7 @@ const Students = () => {
           },
         }}
       >
-        {!loading && studentData.length && !showForm
+        {!loading && !showForm && studentData.length && !studentEditData?.nome
           ? studentData.map((student) => (
               <CardStudent
                 key={student.id}
@@ -138,6 +145,7 @@ const Students = () => {
                 setStudentsData={setStudentData}
                 setSnackbarText={setSnackbarText}
                 setOpen={setOpen}
+                setStudentEditData={setStudentEditData}
               />
             ))
           : null}
@@ -152,6 +160,8 @@ const Students = () => {
           setStudentsData={setStudentData}
           setSnackbarText={setSnackbarText}
           setOpen={setOpen}
+          studentEditData={studentEditData}
+          setStudentEditData={setStudentEditData}
         />
       )}
       <Snackbar

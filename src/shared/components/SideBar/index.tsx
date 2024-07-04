@@ -14,20 +14,24 @@ const SideBarLinks = () => {
       component="aside"
       sx={{
         background: '#FFF',
+        zIndex: 9,
+        position: 'absolute',
+        width: openNav ? '23rem' : '0',
+        transition: 'ease-in-out 300ms',
+        height: 'calc(100vh - 7rem)',
+        borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
+        borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
       }}
     >
       <IconButton
         disableRipple
         sx={{
-          width: openNav ? '23rem' : '4.5rem',
-          position: 'absolute',
+          position: 'relative',
+          left: openNav ? '18rem' : 0,
           background: '#FFF !important',
-          zIndex: 1,
           display: 'flex',
           justifyContent: 'end',
           transition: 'ease-in-out 300ms',
-          borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
-          borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
           borderRadius: 0,
           '&:hover': { background: 'none' },
         }}
@@ -43,19 +47,12 @@ const SideBarLinks = () => {
       <Box
         component="ul"
         sx={{
-          position: 'absolute',
-          width: openNav ? '23rem' : '0',
           background: '#FFF',
           transition: 'ease-in-out 300ms',
           listStyle: 'none',
           m: 0,
           p: '0.5rem 0.5rem 0',
-          zIndex: 9,
-          borderRight: openNav ? '2px solid #ceced3' : '2px solid #FFF',
-          borderLeft: openNav ? '2px solid #ceced3' : '2px solid #FFF',
-          top: 110,
           overflow: 'hidden',
-          height: 'calc(100vh - 11rem)',
         }}
       >
         {navLinksData.map((link) => (

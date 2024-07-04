@@ -49,9 +49,7 @@ const TableDirectors = ({
     try {
       if (id) {
         setDirectorId(Number(0));
-        console.log('oi dellet', directorId);
         const resp = await directors.deleteDirector(id);
-        console.log('respt', resp);
         setDirectorsData((prevState) =>
           prevState.filter((state) => state.id !== id)
         );
@@ -60,8 +58,7 @@ const TableDirectors = ({
     } catch (error) {
       console.error(error);
     }
-  }, [id, setDirectorId, directorId, setDirectorsData]);
-  console.log('oi dellet', directorId);
+  }, [id, setDirectorId, setDirectorsData]);
 
   return (
     <Box sx={{ mt: '2rem' }}>
