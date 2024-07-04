@@ -8,7 +8,7 @@ interface IWrapperContainer {
 
 const WrapperContainer = ({ children, moreStyle }: IWrapperContainer) => {
   return (
-    <Box sx={{ width: '100%', p: '4.5rem', ...moreStyle }}>{children}</Box>
+    <Box sx={{ width: '100%', p: '5.3rem', ...moreStyle }}>{children}</Box>
   );
 };
 

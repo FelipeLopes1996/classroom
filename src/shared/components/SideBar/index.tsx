@@ -33,7 +33,14 @@ const SideBarLinks = () => {
           justifyContent: 'end',
           transition: 'ease-in-out 300ms',
           borderRadius: 0,
+          p: '1rem 0 0 0.7rem',
           '&:hover': { background: 'none' },
+          '@media screen and (max-width: 1200px)': {
+            p: '1rem 0 0 2.2rem',
+          },
+          '@media screen and (max-width: 480px)': {
+            p: '1rem 0 0 2.2rem',
+          },
         }}
         size="large"
         onClick={() => setOpenNav(!openNav)}
