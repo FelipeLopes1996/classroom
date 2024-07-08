@@ -12,6 +12,7 @@ import { student } from '../../../../api/services/students';
 import DeleteModal from '../../../../shared/components/DeleteModal';
 import { useCallback, useState } from 'react';
 import { useDirectorId } from '../../../../shared/context/DirectorProvider';
+import dayjs from 'dayjs';
 
 interface ICardStudent {
   studentData: IStudent;
@@ -109,7 +110,7 @@ const CardStudent = ({
             color="text.secondary"
             gutterBottom
           >
-            {studentData.dataNascimento}
+            {dayjs(studentData.dataNascimento).format('DD/MM/YYYY')}
           </Typography>
           <Typography
             sx={{ mb: '0.5rem', mt: '1.5rem' }}
