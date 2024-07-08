@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import WrapperContainer from '../../components/WrapperContainer';
+import wellcomeImg from '../../assets/sapiens.svg';
 
 const Home = () => {
   return (
@@ -8,13 +9,23 @@ const Home = () => {
         sx={{
           width: '100%',
           display: 'flex',
-          align: 'center',
+          alignItems: 'center',
           justifyContent: 'center',
+          flexDirection: 'column',
         }}
       >
-        <Typography sx={{ fontSize: '3.5rem' }}>
-          olá, seja bem vindo ao nosso app para gerenciar turmas de aula
-        </Typography>
+        <Box
+          component="img"
+          src={wellcomeImg}
+          sx={{
+            width: '70%',
+            '@media screen and (min-width: 1200px)': {
+              margin: '0 auto',
+              width: '70rem',
+            },
+          }}
+        />
+        <Typography sx={{ fontSize: '3rem' }}>Seja bem vindo(a).</Typography>
       </Box>
     </WrapperContainer>
   );
