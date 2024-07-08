@@ -116,7 +116,7 @@ const CardStudent = ({
             variant="h5"
             component="div"
           >
-            Genero
+            Gênero
           </Typography>
           <Typography
             sx={{

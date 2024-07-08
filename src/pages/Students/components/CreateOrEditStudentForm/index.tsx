@@ -226,7 +226,7 @@ const CreateOrEditStudentForm = ({
             labelId="select-sex-label"
             id="select-sexo"
             name="sexo"
-            label="Genero"
+            label="Gênero"
             required={true}
             value={studentData.sexo}
             onChange={(e: SelectChangeEvent<string>) => onChangeStudentForm(e)}
