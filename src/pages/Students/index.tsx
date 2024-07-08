@@ -149,19 +149,19 @@ const Students = () => {
               />
             ))
           : null}
-        {!loading &&
-        !showForm &&
-        !studentData.length &&
-        !studentEditData?.nome ? (
-          <Typography
-            sx={{ fontSize: '1.5rem', fontWeight: 500, margin: '6rem auto 0' }}
-          >
-            Nenhum Aluno encontrado
-          </Typography>
-        ) : null}
       </Box>
       {!loading && !studentData?.length && !showForm && directorId ? (
         <IsData title="Ainda não há aluno" setShowForm={setShowForm} />
+      ) : null}
+      {!loading &&
+      !showForm &&
+      !studentData.length &&
+      !studentEditData?.nome ? (
+        <Typography
+          sx={{ fontSize: '1.5rem', fontWeight: 500, margin: '6rem auto 0' }}
+        >
+          Nenhum Aluno encontrado
+        </Typography>
       ) : null}
 
       {showForm && (
