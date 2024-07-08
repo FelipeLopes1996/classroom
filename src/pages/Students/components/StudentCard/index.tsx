@@ -189,7 +189,7 @@ const CardStudent = ({
       <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
-        title={'Excluir Aluno'}
+        title={'Excluir aluno'}
         informationText={'Deseja realmente excluir o aluno?'}
         handleDelete={handleDelete}
         loading={loading}

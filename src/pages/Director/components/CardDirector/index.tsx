@@ -141,7 +141,7 @@ const CardDirector = ({
       <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
-        title={'Excluir Diretor'}
+        title={'Excluir diretor'}
         informationText={'Deseja realmente excluir o diretor?'}
         handleDelete={handleDelete}
         loading={loading}

@@ -39,7 +39,7 @@ export default function Header() {
           >
             <AssuredWorkloadOutlinedIcon fontSize="large" />
           </IconButton>
-          Gerenciamento de turma
+          Gerenciamento de turmas
         </Typography>
       </Box>
     </Box>

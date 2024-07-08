@@ -127,7 +127,7 @@ const CreateAndEditDirectorForm = ({
       }}
     >
       <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-        {!directorEditData?.nome ? 'Criar Diretor' : 'Editar Diretor'}
+        {!directorEditData?.nome ? 'Criar diretor' : 'Editar diretor'}
       </Typography>
       <Box
         sx={{

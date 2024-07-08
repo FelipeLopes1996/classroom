@@ -172,7 +172,7 @@ const CreateOrEditStudentForm = ({
       onSubmit={(e) => void handleSubmit(e)}
     >
       <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-        {!studentEditData?.nome ? 'Criar Aluno' : 'Editar Aluno'}
+        {!studentEditData?.nome ? 'Criar aluno' : 'Editar aluno'}
       </Typography>
       <Box
         sx={{
@@ -221,7 +221,7 @@ const CreateOrEditStudentForm = ({
           />
         </LocalizationProvider>
         <FormControl fullWidth>
-          <InputLabel id="select-sex-label">Genero</InputLabel>
+          <InputLabel id="select-sex-label">Gênero</InputLabel>
           <Select
             labelId="select-sex-label"
             id="select-sexo"
@@ -247,7 +247,7 @@ const CreateOrEditStudentForm = ({
             display: 'flex',
             flexDirection: 'column',
           }}
-          label="Matricula"
+          label="Matrícula"
         />
         {/* <TextField
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
