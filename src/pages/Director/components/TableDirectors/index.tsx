@@ -12,59 +12,53 @@ import {
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useCallback, useState } from 'react';
-import DeleteModal from '../../../../components/DeleteModal';
-import { IStudent } from '../../../../types/IStudent';
-import { directors } from '../../../../../api/services/directors/request';
+import DeleteModal from '../../../../shared/components/DeleteModal';
+import { IDirector } from '../../../../shared/types/IDirector';
+import { directors } from '../../../../api/services/directors/request';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 
-const tableHeads: string[] = [
-  'Nome',
-  'idade',
-  'Super Usuário',
-  'dataNascimento',
-  'sexo',
-  'matricula',
-  'Ações',
-];
+const tableHeads: string[] = ['Nome', 'Super Usuário', 'Ações'];
 
 interface ITable {
-  studentData: IStudent[];
-  setStudentData: (value: (prevState: IStudent[]) => IStudent[]) => void;
-  setStudentEditData?: (value: IStudent) => void;
+  directorsData: IDirector[];
+  setDirectorsData: (value: (prevState: IDirector[]) => IDirector[]) => void;
+  setDirectorEditData: (value: IDirector) => void;
 }
 
-const TableStudent = ({
-  studentData,
-  setStudentData,
-  // setStudentEditData,
+const TableDirectors = ({
+  directorsData,
+  setDirectorsData,
+  setDirectorEditData,
 }: ITable) => {
+  const { directorId, setDirectorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
-  const [studentId, setStudentId] = useState(0);
+  const [id, setId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // const handleGetDirector = (student: IStudent) => {
-  const handleGetDirector = () => {
-    // setStudentEditData(student);
+  const handleGetDirector = (director: IDirector) => {
+    setDirectorEditData(director);
   };
 
   const handleGetIdOpenModal = (id: number) => {
-    setStudentId(id);
+    setId(id);
     setOpenModal(true);
   };
 
   const handleDelete = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
-      if (studentId) {
-        await directors.deleteDirector(studentId);
-        setStudentData((prevState) =>
-          prevState.filter((state) => state.id !== studentId)
+      if (id) {
+        setDirectorId(Number(0));
+        const resp = await directors.deleteDirector(id);
+        setDirectorsData((prevState) =>
+          prevState.filter((state) => state.id !== id)
         );
         setLoading(false);
       }
     } catch (error) {
       console.error(error);
     }
-  }, [setStudentData, studentId]);
+  }, [id, setDirectorId, setDirectorsData]);
 
   return (
     <Box sx={{ mt: '2rem' }}>
@@ -83,29 +77,19 @@ const TableStudent = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {studentData.length
-              ? studentData.map((student) => (
-                  <TableRow sx={{ p: '0' }} key={student.id}>
+            {directorsData.length
+              ? directorsData.map((director) => (
+                  <TableRow sx={{ p: '0' }} key={director.id}>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
-                      {student.nome}
+                      {director.nome}
                     </TableCell>
                     <TableCell sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
-                      {student.idade || '-'}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
-                      {student.dataNascimento && '--'}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
-                      {student.sexo && 'M'}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: '1.2rem', fontWeight: 500 }}>
-                      {student.matricula && 'M'}
+                      {director.superUsuario && 'Sim'}
                     </TableCell>
                     <TableCell>
                       <IconButton
                         sx={{ padding: '0', mr: '0.5rem' }}
-                        // onClick={() => handleGetDirector(student)}
-                        onClick={() => handleGetDirector()}
+                        onClick={() => handleGetDirector(director)}
                       >
                         <EditOutlinedIcon
                           fontSize="large"
@@ -113,7 +97,9 @@ const TableStudent = ({
                         />
                       </IconButton>
                       <IconButton
-                        onClick={() => handleGetIdOpenModal(Number(student.id))}
+                        onClick={() =>
+                          handleGetIdOpenModal(Number(director.id))
+                        }
                       >
                         <DeleteOutlineOutlinedIcon
                           fontSize="large"
@@ -131,7 +117,7 @@ const TableStudent = ({
         open={openModal}
         setOpen={setOpenModal}
         title={'Excluir Diretor'}
-        informationText={'Deseja realmente excluir um aluno?'}
+        informationText={'Deseja realmente excluir o diretor?'}
         handleDelete={handleDelete}
         loading={loading}
       />
@@ -139,4 +125,4 @@ const TableStudent = ({
   );
 };
 
-export default TableStudent;
+export default TableDirectors;

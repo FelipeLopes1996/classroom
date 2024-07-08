@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import WrapperContainer from '../../components/WrapperContainer';
-import wellcomeImg from '../../assets/sapiens.svg';
+import WrapperContainer from '../../shared/components/WrapperContainer';
+import wellcomeImg from '../../shared/assets/sapiens.svg';
 
 const Home = () => {
   return (

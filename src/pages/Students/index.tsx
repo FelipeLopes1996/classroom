@@ -1,4 +1,4 @@
-import WrapperContainer from '../../components/WrapperContainer';
+import WrapperContainer from '../../shared/components/WrapperContainer';
 import {
   Alert,
   Box,
@@ -7,13 +7,13 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material';
-import { IStudent } from '../../types/IStudent';
+import { IStudent } from '../../shared/types/IStudent';
 import { useEffect, useState } from 'react';
-import IsData from '../../components/IsData';
+import IsData from '../../shared/components/IsData';
 import CreateOrEditStudentForm from './components/CreateOrEditStudentForm';
-import { student } from '../../../api/services/students';
+import { student } from '../../api/services/students';
 import CardStudent from './components/StudentCard';
-import { useDirectorId } from '../../context/DirectorProvider';
+import { useDirectorId } from '../../shared/context/DirectorProvider';
 import { useNavigate } from 'react-router-dom';
 
 const Students = () => {
@@ -149,6 +149,16 @@ const Students = () => {
               />
             ))
           : null}
+        {!loading &&
+        !showForm &&
+        !studentData.length &&
+        !studentEditData?.nome ? (
+          <Typography
+            sx={{ fontSize: '1.5rem', fontWeight: 500, margin: '6rem auto 0' }}
+          >
+            Nenhum Aluno encontrado
+          </Typography>
+        ) : null}
       </Box>
       {!loading && !studentData?.length && !showForm && directorId ? (
         <IsData title="Ainda não há aluno" setShowForm={setShowForm} />

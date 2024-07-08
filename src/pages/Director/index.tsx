@@ -6,11 +6,11 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import WrapperContainer from '../../components/WrapperContainer';
+import WrapperContainer from '../../shared/components/WrapperContainer';
 import CreateAndEditDirectorForm from './components/CreateAndEditDirectorForm';
-import { IDirector } from '../../types/IDirector';
-import { directors } from '../../../api/services/directors/request';
-import IsData from '../../components/IsData';
+import { IDirector } from '../../shared/types/IDirector';
+import { directors } from '../../api/services/directors/request';
+import IsData from '../../shared/components/IsData';
 import CardDirector from './components/CardDirector';
 
 const Director = () => {

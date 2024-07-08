@@ -14,10 +14,10 @@ import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
-import { IStudent } from '../../../../types/IStudent';
-import { calculateAge } from '../../../../utils/calculateAge';
-import { student } from '../../../../../api/services/students';
-import { useDirectorId } from '../../../../context/DirectorProvider';
+import { IStudent } from '../../../../shared/types/IStudent';
+import { calculateAge } from '../../../../shared/utils/calculateAge';
+import { student } from '../../../../api/services/students';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 
 interface IForm {
   setShowForm: (value: boolean) => void;

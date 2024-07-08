@@ -7,11 +7,11 @@ import Typography from '@mui/material/Typography';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
-import { IStudent } from '../../../../types/IStudent';
-import { student } from '../../../../../api/services/students';
-import DeleteModal from '../../../../components/DeleteModal';
+import { IStudent } from '../../../../shared/types/IStudent';
+import { student } from '../../../../api/services/students';
+import DeleteModal from '../../../../shared/components/DeleteModal';
 import { useCallback, useState } from 'react';
-import { useDirectorId } from '../../../../context/DirectorProvider';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 
 interface ICardStudent {
   studentData: IStudent;

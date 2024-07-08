@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import Home from '../shared/pages/Home';
-import PageNotFound from '../shared/pages/PageNotFound';
-import Director from '../shared/pages/Director';
+import Home from '../pages/Home';
+import PageNotFound from '../pages/PageNotFound';
+import Director from '../pages/Director';
 import App from '..';
-import Students from '../shared/pages/Students';
+import Students from '../pages/Students';
 import { DirectorProvider } from '../shared/context/DirectorProvider';
 
 const pagesRoutes = [

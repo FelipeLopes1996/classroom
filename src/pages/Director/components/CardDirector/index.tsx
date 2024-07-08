@@ -6,12 +6,12 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import { IDirector } from '../../../../types/IDirector';
-import DeleteModal from '../../../../components/DeleteModal';
+import { IDirector } from '../../../../shared/types/IDirector';
+import DeleteModal from '../../../../shared/components/DeleteModal';
 import { useCallback, useState } from 'react';
-import { directors } from '../../../../../api/services/directors/request';
+import { directors } from '../../../../api/services/directors/request';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
-import { useDirectorId } from '../../../../context/DirectorProvider';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 
 interface ICardDirector {
   directorData: IDirector;
