@@ -156,11 +156,17 @@ const Students = () => {
       {!loading &&
       !showForm &&
       !studentData.length &&
-      !studentEditData?.nome ? (
+      !studentEditData?.nome &&
+      !directorId ? (
         <Typography
-          sx={{ fontSize: '1.5rem', fontWeight: 500, margin: '6rem auto 0' }}
+          sx={{
+            fontSize: '1.5rem',
+            fontWeight: 500,
+            mt: '6rem',
+            textAlign: 'center',
+          }}
         >
-          Nenhum Aluno encontrado
+          Nenhum aluno foi encontrado.
         </Typography>
       ) : null}
 
