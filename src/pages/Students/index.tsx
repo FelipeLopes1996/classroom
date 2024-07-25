@@ -79,6 +79,7 @@ const Students = () => {
         directorId &&
         !studentEditData?.nome ? (
           <Button
+            disabled={studentData?.length === 10}
             sx={{
               '@media screen and (max-width: 650px)': {
                 position: 'absolute',
@@ -129,7 +130,7 @@ const Students = () => {
         sx={{
           mt: '2.5rem',
           display: 'grid',
-          gap: '2rem',
+          gap: '1rem',
           gridTemplateColumns:
             'repeat(auto-fit, minmax(min(80%/2, max(350px, 80%/3)), 356px))',
           '@media screen and (max-width: 1200px)': {
