@@ -6,6 +6,7 @@ import Director from '../pages/Director';
 import App from '..';
 import Students from '../pages/Students';
 import { DirectorProvider } from '../shared/context/DirectorProvider';
+import Classroom from '../pages/Classroom';
 
 const pagesRoutes = [
   {
@@ -32,6 +33,10 @@ const pagesRoutes = [
       {
         path: '/alunos',
         element: <Students />,
+      },
+      {
+        path: '/turmas',
+        element: <Classroom />,
       },
     ],
   },
