@@ -5,57 +5,60 @@ import CardContent from '@mui/material/CardContent';
 // import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
-// import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-// import { Avatar, CardHeader, IconButton } from '@mui/material';
-import { Avatar, CardHeader } from '@mui/material';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { Avatar, CardHeader, IconButton } from '@mui/material';
 // import dayjs from 'dayjs';
 import { IClassroom } from '../../../shared/types/IClassroom';
+import { useDirectorId } from '../../../shared/context/DirectorProvider';
+import { classroom } from '../../../api/services/classroom/requests';
+import DeleteModal from '../../../shared/components/DeleteModal';
+import { useCallback, useState } from 'react';
 
 interface IClassroomCard {
   classroomData: IClassroom;
-  // setStudentsData: (value: (prevState: IStudent[]) => IStudent[]) => void;
-  // setOpen: (value: boolean) => void;
-  // setSnackbarText: (value: string) => void;
-  // setStudentEditData: (value: IStudent) => void;
+  setClassroomData: (value: (prevState: IClassroom[]) => IClassroom[]) => void;
+  setOpen: (value: boolean) => void;
+  setSnackbarText: (value: string) => void;
+  // setClassroomEditData: (value: IClassroom) => void;
 }
 
 const ClassroomCard = ({
   classroomData,
-  // setStudentsData,
-  // setSnackbarText,
-  // setOpen,
-  // setStudentEditData,
+  setClassroomData,
+  setSnackbarText,
+  setOpen,
+  // setClassroomEditData,
 }: IClassroomCard) => {
-  // const { directorId } = useDirectorId();
-  // const [openModal, setOpenModal] = useState(false);
-  // const [studentId, setStudentId] = useState(0);
-  // const [loading, setLoading] = useState(false);
+  const { directorId } = useDirectorId();
+  const [openModal, setOpenModal] = useState(false);
+  const [classroomId, setClassroomId] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  // const handleGetStudent = (student: IStudent) => {
-  //   setStudentEditData(student);
+  // const handleGetClassroom = (classroom: IClassroom) => {
+  //   setClassroomEditData(classroom);
   // };
 
-  // const handleGetIdOpenModal = (id: number) => {
-  //   setStudentId(id);
-  //   setOpenModal(true);
-  // };
+  const handleGetIdOpenModal = (id: number) => {
+    setClassroomId(id);
+    setOpenModal(true);
+  };
 
-  // const handleDelete = useCallback(async (): Promise<void> => {
-  //   setLoading(true);
-  //   try {
-  //     if (studentId) {
-  //       await student.deleteStudent(studentId);
-  //       setStudentsData((prevState) =>
-  //         prevState.filter((student) => student.id !== studentId)
-  //       );
-  //       setSnackbarText('Aluno excluído com sucesso!');
-  //       setOpen(true);
-  //       setLoading(false);
-  //     }
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }, [setOpen, setSnackbarText, setStudentsData, studentId]);
+  const handleDelete = useCallback(async (): Promise<void> => {
+    setLoading(true);
+    try {
+      if (classroomId) {
+        await classroom.deleteClassroom(classroomId);
+        setClassroomData((prevState) =>
+          prevState.filter((classroom) => classroom.id !== classroomId)
+        );
+        setSnackbarText('Sala excluída com sucesso!');
+        setOpen(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [setOpen, setSnackbarText, setClassroomData, classroomId]);
 
   return (
     <Box>
@@ -136,28 +139,28 @@ const ClassroomCard = ({
               color: '#3d93e8',
               '&:hover': { background: 'none' },
             }}
-            onClick={() => handleGetStudent(studentData)}
+            onClick={() => handleGetStudent(classroomData)}
           >
             <EditOutlinedIcon fontSize="large" />
-          </IconButton>
+          </IconButton> */}
           <IconButton
             disabled={!directorId}
             disableRipple
             sx={{ color: '#e71717', '&:hover': { background: 'none' } }}
-            onClick={() => handleGetIdOpenModal(Number(studentData.id))}
+            onClick={() => handleGetIdOpenModal(Number(classroomData.id))}
           >
             <DeleteOutlineOutlinedIcon fontSize="large" />
-          </IconButton> */}
+          </IconButton>
         </CardActions>
       </Card>
-      {/* <DeleteModal
+      <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
-        title={'Excluir aluno'}
-        informationText={'Deseja realmente excluir o aluno?'}
+        title={'Excluir Sala'}
+        informationText={'Deseja realmente excluir a sala?'}
         handleDelete={handleDelete}
         loading={loading}
-      /> */}
+      />
     </Box>
   );
 };

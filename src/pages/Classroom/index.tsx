@@ -1,4 +1,11 @@
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Alert,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 import WrapperContainer from '../../shared/components/WrapperContainer';
 import IsData from '../../shared/components/IsData';
 import { useEffect, useState } from 'react';
@@ -15,6 +22,8 @@ const Classroom = () => {
   const handleGoDirector = () => navigate('/diretores');
   const [classroomData, setClassroomData] = useState<IClassroom[]>([]);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [snackbarText, setSnackbarText] = useState('');
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +39,17 @@ const Classroom = () => {
       });
   }, []);
 
-  console.log(classroomData);
+  const handleClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <WrapperContainer>
       <Box
@@ -47,6 +66,21 @@ const Classroom = () => {
         }}
       >
         <Typography sx={{ fontSize: '2.5rem' }}>Turmas</Typography>
+        {!showForm && classroomData?.length && directorId ? (
+          <Button
+            disabled={classroomData?.length === 10}
+            sx={{
+              '@media screen and (max-width: 650px)': {
+                position: 'absolute',
+                right: 0,
+                top: -4,
+              },
+            }}
+            onClick={() => setShowForm(true)}
+          >
+            Adicionar
+          </Button>
+        ) : null}
         {!showForm && !directorId ? (
           <Box
             sx={{
@@ -98,10 +132,10 @@ const Classroom = () => {
               <ClassroomCard
                 key={classroom.id}
                 classroomData={classroom}
-                // setStudentsData={setStudentData}
-                // setSnackbarText={setSnackbarText}
-                // setOpen={setOpen}
-                // setStudentEditData={setStudentEditData}
+                setClassroomData={setClassroomData}
+                setSnackbarText={setSnackbarText}
+                setOpen={setOpen}
+                // setClassroomEditData={setClassroomEditData}
               />
             ))
           : null}
@@ -110,6 +144,21 @@ const Classroom = () => {
         <IsData title="Ainda não há turmas" setShowForm={setShowForm} />
       ) : null}
       {showForm && <Box>form</Box>}
+      <Snackbar
+        open={open}
+        autoHideDuration={1500}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackbarText.includes('excluído') ? 'error' : 'success'}
+          variant="filled"
+          sx={{ width: '100%', fontSize: '1.5rem' }}
+        >
+          {snackbarText}
+        </Alert>
+      </Snackbar>
     </WrapperContainer>
   );
 };
