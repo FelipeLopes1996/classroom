@@ -8,10 +8,10 @@ import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
 // import dayjs from 'dayjs';
-import { IClassroom } from '../../../shared/types/IClassroom';
-import { useDirectorId } from '../../../shared/context/DirectorProvider';
-import { classroom } from '../../../api/services/classroom/requests';
-import DeleteModal from '../../../shared/components/DeleteModal';
+import { IClassroom } from '../../../../shared/types/IClassroom';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
+import { classroom } from '../../../../api/services/classroom/requests';
+import DeleteModal from '../../../../shared/components/DeleteModal';
 import { useCallback, useState } from 'react';
 
 interface IClassroomCard {

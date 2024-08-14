@@ -14,6 +14,7 @@ import { useDirectorId } from '../../shared/context/DirectorProvider';
 import { IClassroom } from '../../shared/types/IClassroom';
 import { classroom } from '../../api/services/classroom/requests';
 import ClassroomCard from './components/ClassroomCard';
+import CreateOrEditClassroom from './components/CreateOrEditClassroom';
 
 const Classroom = () => {
   const { directorId } = useDirectorId();
@@ -143,7 +144,14 @@ const Classroom = () => {
       {!loading && !classroomData?.length && !showForm && directorId ? (
         <IsData title="Ainda não há turmas" setShowForm={setShowForm} />
       ) : null}
-      {showForm && <Box>form</Box>}
+      {showForm && (
+        <CreateOrEditClassroom
+          setShowForm={setShowForm}
+          setClassroomsData={setClassroomData}
+          setOpen={setOpen}
+          setSnackbarText={setSnackbarText}
+        />
+      )}
       <Snackbar
         open={open}
         autoHideDuration={1500}
