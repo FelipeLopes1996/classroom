@@ -2,12 +2,11 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-// import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import Typography from '@mui/material/Typography';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { Avatar, CardHeader, IconButton } from '@mui/material';
-// import dayjs from 'dayjs';
 import { IClassroom } from '../../../../shared/types/IClassroom';
 import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 import { classroom } from '../../../../api/services/classroom/requests';
@@ -19,7 +18,7 @@ interface IClassroomCard {
   setClassroomData: (value: (prevState: IClassroom[]) => IClassroom[]) => void;
   setOpen: (value: boolean) => void;
   setSnackbarText: (value: string) => void;
-  // setClassroomEditData: (value: IClassroom) => void;
+  setClassroomEditData: (value: IClassroom) => void;
 }
 
 const ClassroomCard = ({
@@ -27,16 +26,16 @@ const ClassroomCard = ({
   setClassroomData,
   setSnackbarText,
   setOpen,
-  // setClassroomEditData,
+  setClassroomEditData,
 }: IClassroomCard) => {
   const { directorId } = useDirectorId();
   const [openModal, setOpenModal] = useState(false);
   const [classroomId, setClassroomId] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  // const handleGetClassroom = (classroom: IClassroom) => {
-  //   setClassroomEditData(classroom);
-  // };
+  const handleGetClassroom = (classroom: IClassroom) => {
+    setClassroomEditData(classroom);
+  };
 
   const handleGetIdOpenModal = (id: number) => {
     setClassroomId(id);
@@ -131,7 +130,7 @@ const ClassroomCard = ({
           </Typography>
         </CardContent>
         <CardActions sx={{ justifyContent: 'end', padding: '1.5rem 0 0 0' }}>
-          {/* <IconButton
+          <IconButton
             disabled={!directorId}
             disableRipple
             sx={{
@@ -139,10 +138,10 @@ const ClassroomCard = ({
               color: '#3d93e8',
               '&:hover': { background: 'none' },
             }}
-            onClick={() => handleGetStudent(classroomData)}
+            onClick={() => handleGetClassroom(classroomData)}
           >
             <EditOutlinedIcon fontSize="large" />
-          </IconButton> */}
+          </IconButton>
           <IconButton
             disabled={!directorId}
             disableRipple

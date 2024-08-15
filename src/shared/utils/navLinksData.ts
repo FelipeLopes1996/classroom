@@ -8,7 +8,7 @@ export const navLinksData = [
   },
   { name: 'Alunos', icon: PeopleOutlineIcon, url: `/alunos` },
   {
-    name: 'Turmas',
-    url: `/turmas`,
+    name: 'Salas',
+    url: `/salas`,
   },
 ];

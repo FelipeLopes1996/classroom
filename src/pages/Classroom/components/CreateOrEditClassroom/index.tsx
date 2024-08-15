@@ -6,7 +6,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import React, { ChangeEvent, useCallback, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { IClassroom } from '../../../../shared/types/IClassroom';
 import { classroom } from '../../../../api/services/classroom/requests';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -39,7 +39,7 @@ const CreateOrEditClassroom = ({
   setSnackbarText,
   setOpen,
   setClassroomEditData,
-  // classroomEditData,
+  classroomEditData,
 }: IForm) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -47,7 +47,6 @@ const CreateOrEditClassroom = ({
     numero: 0,
     professor: '',
     horario: '',
-    alunos: [],
   });
 
   const handleCancel = useCallback(() => {
@@ -91,7 +90,6 @@ const CreateOrEditClassroom = ({
         numero: Number(classroomData.numero),
         professor: classroomData.professor,
         horario: classroomData.horario,
-        alunos: [],
       };
 
       if (!classroomData.horario) {
@@ -100,36 +98,33 @@ const CreateOrEditClassroom = ({
       }
 
       try {
-        // const resp = !studentEditData?.nome
-        //   ? await student.createStudent(newStudent)
-        //   : await student.updateStudent(
-        //       newStudent,
-        //       Number(studentEditData?.id)
-        //     );
-        const resp = await classroom.createClassroom(newClassroom);
-
+        const resp = !classroomEditData?.numero
+          ? await classroom.createClassroom(newClassroom)
+          : await classroom.updateClassroom(
+              newClassroom,
+              Number(classroomEditData?.id)
+            );
         handleCancel();
         setShowForm(false);
         setLoading(false);
         setOpen(true);
-        setSnackbarText('Sala criado com sucesso!');
-        setClassroomsData((prevState) => [...prevState, resp]);
-        // setSnackbarText(
-        //   studentEditData?.nome
-        //     ? 'Aluno alteraddo com sucesso!'
-        //     : 'Aluno criado com sucesso!'
-        // );
-        // if (!studentEditData?.nome) {
-        //   setStudentsData((prevState) => [...prevState, resp]);
-        // } else {
-        // setClassroomsData((prevState) =>
-        //   prevState.map((classroom) =>
-        //     classroom?.id === studentEditData?.id
-        //       ? { ...newStudent, id: studentEditData?.id }
-        //       : student
-        //   )
-        // );
-        // }
+
+        setSnackbarText(
+          classroomEditData?.numero
+            ? 'Sala alterada com sucesso!'
+            : 'Sala criada com sucesso!'
+        );
+        if (!classroomEditData?.numero) {
+          setClassroomsData((prevState) => [...prevState, resp]);
+        } else {
+          setClassroomsData((prevState) =>
+            prevState.map((classroom) =>
+              classroom?.id === classroomEditData?.id
+                ? { ...newClassroom, id: classroomEditData?.id }
+                : classroom
+            )
+          );
+        }
       } catch (error) {
         console.error(error);
         setLoading(false);
@@ -139,6 +134,8 @@ const CreateOrEditClassroom = ({
       classroomData.horario,
       classroomData.numero,
       classroomData.professor,
+      classroomEditData?.id,
+      classroomEditData?.numero,
       handleCancel,
       setClassroomsData,
       setOpen,
@@ -147,18 +144,12 @@ const CreateOrEditClassroom = ({
     ]
   );
 
-  // const regexNumeros = /^\d+$/;
+  useEffect(() => {
+    if (classroomEditData?.numero && !classroomData.numero) {
+      return setClassroomData(classroomEditData);
+    }
+  }, [classroomEditData, classroomData]);
 
-  // function validarNumero(input: string): boolean {
-  //   return regexNumeros.test(input);
-  // }
-
-  // const validarInput = (input: string) => {
-  //   if (!regexNumeros.test(input.value)) {
-  //     // Exibir uma mensagem de erro ou impedir a digitação de caracteres não numéricos
-  //     input.value = input.value.replace(/\D/g, ''); // Remover caracteres não numéricos
-  //   }
-  // }
   return (
     <Box
       component="form"
@@ -174,8 +165,7 @@ const CreateOrEditClassroom = ({
       onSubmit={(e) => void handleSubmit(e)}
     >
       <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-        {/* {!studentEditData?.nome ? 'Criar Sala' : 'Editar sala'} */}
-        Criar Sala
+        {!classroomEditData?.numero ? 'Criar Sala' : 'Editar Sala'}
       </Typography>
       <Box
         sx={{
@@ -216,7 +206,7 @@ const CreateOrEditClassroom = ({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['TimePicker']}>
             <TimePicker
-              value={dayjs(classroomData.horario)}
+              value={dayjs(classroomData.horario, 'HH:mm:ss')}
               views={['hours', 'minutes']}
               onChange={(date: Dayjs | null) => {
                 if (date) {
@@ -267,12 +257,11 @@ const CreateOrEditClassroom = ({
             }}
             disabled={loading}
           >
-            {/* {!loading ? (
-            `${!studentEditData?.nome ? 'Adicionar' : 'Salvar'}`
-          ) : (
-            <CircularProgress size={20} />
-          )} */}
-            {!loading ? 'Adicionar' : <CircularProgress size={20} />}
+            {!loading ? (
+              `${!classroomData.numero ? 'Adicionar' : 'Salvar'}`
+            ) : (
+              <CircularProgress size={20} />
+            )}{' '}
           </Button>
         </Box>
       </Box>

@@ -35,7 +35,7 @@ const pagesRoutes = [
         element: <Students />,
       },
       {
-        path: '/turmas',
+        path: '/salas',
         element: <Classroom />,
       },
     ],

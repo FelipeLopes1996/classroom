@@ -25,6 +25,7 @@ const Classroom = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [snackbarText, setSnackbarText] = useState('');
+  const [classroomEditData, setClassroomEditData] = useState<IClassroom>();
 
   useEffect(() => {
     setLoading(true);
@@ -51,6 +52,12 @@ const Classroom = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (!showForm && classroomData && classroomEditData?.numero) {
+      setShowForm(true);
+    }
+  }, [showForm, classroomData, classroomEditData]);
+
   return (
     <WrapperContainer>
       <Box
@@ -66,8 +73,11 @@ const Classroom = () => {
           },
         }}
       >
-        <Typography sx={{ fontSize: '2.5rem' }}>Turmas</Typography>
-        {!showForm && classroomData?.length && directorId ? (
+        <Typography sx={{ fontSize: '2.5rem' }}>Salas</Typography>
+        {!showForm &&
+        classroomData?.length &&
+        directorId &&
+        !classroomEditData?.numero ? (
           <Button
             disabled={classroomData?.length === 10}
             sx={{
@@ -128,7 +138,10 @@ const Classroom = () => {
           },
         }}
       >
-        {!loading && !showForm && classroomData.length
+        {!loading &&
+        !showForm &&
+        classroomData.length &&
+        !classroomEditData?.numero
           ? classroomData.map((classroom) => (
               <ClassroomCard
                 key={classroom.id}
@@ -136,13 +149,13 @@ const Classroom = () => {
                 setClassroomData={setClassroomData}
                 setSnackbarText={setSnackbarText}
                 setOpen={setOpen}
-                // setClassroomEditData={setClassroomEditData}
+                setClassroomEditData={setClassroomEditData}
               />
             ))
           : null}
       </Box>
       {!loading && !classroomData?.length && !showForm && directorId ? (
-        <IsData title="Ainda não há turmas" setShowForm={setShowForm} />
+        <IsData title="Ainda não há Salas" setShowForm={setShowForm} />
       ) : null}
       {showForm && (
         <CreateOrEditClassroom
@@ -150,6 +163,8 @@ const Classroom = () => {
           setClassroomsData={setClassroomData}
           setOpen={setOpen}
           setSnackbarText={setSnackbarText}
+          classroomEditData={classroomEditData}
+          setClassroomEditData={setClassroomEditData}
         />
       )}
       <Snackbar

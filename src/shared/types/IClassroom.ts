@@ -5,5 +5,5 @@ export interface IClassroom {
   numero: number;
   professor?: string;
   horario: string;
-  alunos: IStudent[];
+  alunos?: IStudent[];
 }
