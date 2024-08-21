@@ -7,6 +7,7 @@ import App from '..';
 import Students from '../pages/Students';
 import { DirectorProvider } from '../shared/context/DirectorProvider';
 import Classroom from '../pages/Classroom';
+import Teacher from '../pages/Teatcher';
 
 const pagesRoutes = [
   {
@@ -37,6 +38,10 @@ const pagesRoutes = [
       {
         path: '/salas',
         element: <Classroom />,
+      },
+      {
+        path: '/professores',
+        element: <Teacher />,
       },
     ],
   },
