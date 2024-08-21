@@ -11,4 +11,8 @@ export const navLinksData = [
     name: 'Salas',
     url: `/salas`,
   },
+  {
+    name: 'Professores',
+    url: `/professores`,
+  },
 ];
