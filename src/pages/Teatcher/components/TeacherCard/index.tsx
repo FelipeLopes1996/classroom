@@ -14,17 +14,51 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import dayjs from 'dayjs';
 import { useDirectorId } from '../../../../shared/context/DirectorProvider';
 import { ITeacher } from '../../../../shared/types/ITeacher';
+import { useCallback, useState } from 'react';
+import { teachers } from '../../../../api/services/teacher/requests';
+import DeleteModal from '../../../../shared/components/DeleteModal';
 
 interface ITeacherCard {
   teacherData: ITeacher;
-  // setTeacherData: (value: (prevState: ITeacher[]) => ITeacher[]) => void;
-  // setOpen: (value: boolean) => void;
-  // setSnackbarText: (value: string) => void;
+  setTeacherData: (value: (prevState: ITeacher[]) => ITeacher[]) => void;
+  setOpen: (value: boolean) => void;
+  setSnackbarText: (value: string) => void;
   // setTeacherEditData: (value: ITeacher) => void;
 }
 
-const TeacherCard = ({ teacherData }: ITeacherCard) => {
+const TeacherCard = ({
+  teacherData,
+  setTeacherData,
+  setOpen,
+  setSnackbarText,
+}: ITeacherCard) => {
   const { directorId } = useDirectorId();
+  const [teacherId, setTeacherId] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleGetIdOpenModal = (id: number) => {
+    setTeacherId(id);
+    setOpenModal(true);
+  };
+
+  const handleDelete = useCallback(async (): Promise<void> => {
+    setLoading(true);
+    try {
+      if (teacherId) {
+        await teachers.deleteTeacher(teacherId);
+        setTeacherData((prevState) =>
+          prevState.filter((teacher) => teacher.id !== teacherId)
+        );
+        setSnackbarText('Professor excluído com sucesso!');
+        setOpen(true);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [setOpen, setSnackbarText, setTeacherData, teacherId]);
+
   return (
     <Box>
       <Card variant="outlined" sx={{ p: '2rem' }}>
@@ -109,23 +143,23 @@ const TeacherCard = ({ teacherData }: ITeacherCard) => {
             <EditOutlinedIcon fontSize="large" />
           </IconButton>
           <IconButton
-            disabled={!directorId || true}
+            disabled={!directorId}
             disableRipple
             sx={{ color: '#e71717', '&:hover': { background: 'none' } }}
-            // onClick={() => handleGetIdOpenModal(Number(teacherData.id))}
+            onClick={() => handleGetIdOpenModal(Number(teacherData.id))}
           >
             <DeleteOutlineOutlinedIcon fontSize="large" />
           </IconButton>
         </CardActions>
       </Card>
-      {/* <DeleteModal
+      <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
         title={'Excluir professor'}
         informationText={'Deseja realmente excluir o professor(a)?'}
         handleDelete={handleDelete}
         loading={loading}
-      /> */}
+      />
     </Box>
   );
 };

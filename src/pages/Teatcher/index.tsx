@@ -142,9 +142,9 @@ const Teacher = () => {
               <TeacherCard
                 key={teacher.id}
                 teacherData={teacher}
-                //   setTeacherData={setClassroomData}
-                //   setSnackbarText={setSnackbarText}
-                //   setOpen={setOpen}
+                setTeacherData={setTeacherData}
+                setSnackbarText={setSnackbarText}
+                setOpen={setOpen}
                 //   setTeacherEditData={setClassroomEditData}
               />
             ))
