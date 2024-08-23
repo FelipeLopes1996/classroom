@@ -7,7 +7,7 @@ import {
   Typography,
 } from '@mui/material';
 import { ITeacher } from '../../../../shared/types/ITeacher';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -18,22 +18,24 @@ interface IForm {
   setTeacherData: (value: (prevState: ITeacher[]) => ITeacher[]) => void;
   setOpen: (value: boolean) => void;
   setSnackbarText: (value: string) => void;
-  // studentEditData?: ITeacher;
-  // setStudentEditData?: (value: ITeacher) => void;
+  teacherEditData?: ITeacher;
+  setTeacherEditData?: (value: ITeacher) => void;
 }
 
-// const getEmptyTeacher = (): ITeacher => ({
-//   id: 0,
-//   materia: '',
-//   nome: '',
-//   contratacao: '',
-// });
+const getEmptyTeacher = (): ITeacher => ({
+  id: 0,
+  materia: '',
+  nome: '',
+  contratacao: '',
+});
 
 const CreateOrEditTeacherForm = ({
   setShowForm,
   setTeacherData,
   setSnackbarText,
   setOpen,
+  teacherEditData,
+  setTeacherEditData,
 }: IForm) => {
   const [teacherDataForm, setTeacherDataForm] = useState<ITeacher>({
     materia: '',
@@ -64,11 +66,10 @@ const CreateOrEditTeacherForm = ({
 
   const handleCancel = useCallback(() => {
     setShowForm(false);
-    //   if (getEmptyTeacher) {
-    //     getEmptyTeacher(getEmptyStudent());
-    //   }
-    // }, [getEmptyTeacher, setShowForm]);
-  }, [setShowForm]);
+    if (setTeacherEditData) {
+      setTeacherEditData(getEmptyTeacher());
+    }
+  }, [setTeacherEditData, setShowForm]);
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
@@ -87,19 +88,37 @@ const CreateOrEditTeacherForm = ({
       }
 
       try {
-        const resp = await teachers.createTeacher(newTeacher);
+        const resp = !teacherEditData?.nome
+          ? await teachers.createTeacher(newTeacher)
+          : await teachers.updateTeacher(
+              newTeacher,
+              Number(teacherEditData.id)
+            );
 
         handleCancel();
         setShowForm(false);
         setLoading(false);
         setOpen(true);
-        setSnackbarText('Professor criado com sucesso!');
-        setTeacherData((prevState) => [...prevState, resp]);
+        setSnackbarText(
+          !teacherEditData?.nome
+            ? 'Professor(a) criado com sucesso!'
+            : 'Professor(a) alteraddo com sucesso!'
+        );
+        if (!teacherEditData?.nome) {
+          setTeacherData((prevState) => [...prevState, resp]);
+        } else {
+          setTeacherData((prevState) =>
+            prevState.map((teacher) =>
+              teacher?.id === teacherEditData.id
+                ? { ...newTeacher, id: teacherEditData.id }
+                : teacher
+            )
+          );
+        }
       } catch (error) {
         console.error(error);
         setLoading(false);
       }
-      console.log('ola mundo');
     },
     [
       handleCancel,
@@ -110,8 +129,15 @@ const CreateOrEditTeacherForm = ({
       teacherDataForm.contratacao,
       teacherDataForm.materia,
       teacherDataForm.nome,
+      teacherEditData?.id,
+      teacherEditData?.nome,
     ]
   );
+
+  useEffect(() => {
+    if (teacherEditData?.nome && !teacherDataForm.nome)
+      return setTeacherDataForm(teacherEditData);
+  }, [teacherEditData, teacherDataForm, setTeacherDataForm]);
 
   return (
     <Box
@@ -128,8 +154,7 @@ const CreateOrEditTeacherForm = ({
       onSubmit={(e) => void handleSubmit(e)}
     >
       <Typography sx={{ fontSize: '1.6rem', fontWeight: 500 }}>
-        {/* {!studentEditData?.nome ? 'Criar professor' : 'Editar professor'} */}
-        Criar professor
+        {!teacherEditData?.nome ? 'Criar Professor(a)' : 'Editar Professor(a)'}
       </Typography>
       <Box
         sx={{
@@ -172,6 +197,7 @@ const CreateOrEditTeacherForm = ({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             name="contratacao"
+            format="DD/MM/YYYY"
             label="Data de contratação"
             value={dayjs(teacherDataForm.contratacao)}
             maxDate={dayjs().subtract(2, 'year')}
@@ -221,12 +247,11 @@ const CreateOrEditTeacherForm = ({
             }}
             disabled={loading}
           >
-            {/* {!loading ? (
-              `${!studentEditData?.nome ? 'Adicionar' : 'Salvar'}`
+            {!loading ? (
+              `${!teacherEditData?.nome ? 'Adicionar' : 'Salvar'}`
             ) : (
               <CircularProgress size={20} />
-            )} */}
-            {!loading ? 'Adicionar' : <CircularProgress size={20} />}
+            )}
           </Button>
         </Box>
       </Box>

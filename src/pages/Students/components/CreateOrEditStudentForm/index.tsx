@@ -198,6 +198,7 @@ const CreateOrEditStudentForm = ({
         />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            format="DD/MM/YYYY"
             name="dataNascimento"
             label="Data de nascimento"
             value={dayjs(studentData.dataNascimento)}

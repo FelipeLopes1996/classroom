@@ -23,7 +23,7 @@ interface ITeacherCard {
   setTeacherData: (value: (prevState: ITeacher[]) => ITeacher[]) => void;
   setOpen: (value: boolean) => void;
   setSnackbarText: (value: string) => void;
-  // setTeacherEditData: (value: ITeacher) => void;
+  setTeacherEditData: (value: ITeacher) => void;
 }
 
 const TeacherCard = ({
@@ -31,6 +31,7 @@ const TeacherCard = ({
   setTeacherData,
   setOpen,
   setSnackbarText,
+  setTeacherEditData,
 }: ITeacherCard) => {
   const { directorId } = useDirectorId();
   const [teacherId, setTeacherId] = useState(0);
@@ -42,6 +43,10 @@ const TeacherCard = ({
     setOpenModal(true);
   };
 
+  const handleGetTeacher = (teacher: ITeacher) => {
+    setTeacherEditData(teacher);
+  };
+
   const handleDelete = useCallback(async (): Promise<void> => {
     setLoading(true);
     try {
@@ -50,7 +55,7 @@ const TeacherCard = ({
         setTeacherData((prevState) =>
           prevState.filter((teacher) => teacher.id !== teacherId)
         );
-        setSnackbarText('Professor excluído com sucesso!');
+        setSnackbarText('Professor(a) excluído com sucesso!');
         setOpen(true);
         setLoading(false);
       }
@@ -131,14 +136,14 @@ const TeacherCard = ({
         </CardContent>
         <CardActions sx={{ justifyContent: 'end', padding: '1.5rem 0 0 0' }}>
           <IconButton
-            disabled={!directorId || true}
+            disabled={!directorId}
             disableRipple
             sx={{
               mr: '0.5rem',
               color: '#3d93e8',
               '&:hover': { background: 'none' },
             }}
-            // onClick={() => handleGetTeacher(teacherData)}
+            onClick={() => handleGetTeacher(teacherData)}
           >
             <EditOutlinedIcon fontSize="large" />
           </IconButton>
@@ -155,7 +160,7 @@ const TeacherCard = ({
       <DeleteModal
         open={openModal}
         setOpen={setOpenModal}
-        title={'Excluir professor'}
+        title={'Excluir Professor(a)'}
         informationText={'Deseja realmente excluir o professor(a)?'}
         handleDelete={handleDelete}
         loading={loading}

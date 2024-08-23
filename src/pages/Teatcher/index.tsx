@@ -24,6 +24,7 @@ const Teacher = () => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [snackbarText, setSnackbarText] = useState('');
+  const [teacherEditData, setTeacherEditData] = useState<ITeacher>();
 
   const handleGoDirector = () => navigate('/diretores');
 
@@ -58,6 +59,12 @@ const Teacher = () => {
 
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (!showForm && teacherData && teacherEditData?.nome) {
+      setShowForm(true);
+    }
+  }, [showForm, teacherData, teacherEditData?.nome]);
 
   return (
     <WrapperContainer>
@@ -145,7 +152,7 @@ const Teacher = () => {
                 setTeacherData={setTeacherData}
                 setSnackbarText={setSnackbarText}
                 setOpen={setOpen}
-                //   setTeacherEditData={setClassroomEditData}
+                setTeacherEditData={setTeacherEditData}
               />
             ))
           : null}
@@ -159,6 +166,8 @@ const Teacher = () => {
           setTeacherData={setTeacherData}
           setSnackbarText={setSnackbarText}
           setOpen={setOpen}
+          teacherEditData={teacherEditData}
+          setTeacherEditData={setTeacherEditData}
         />
       )}
 
