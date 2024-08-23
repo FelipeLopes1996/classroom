@@ -1,5 +1,12 @@
 import WrapperContainer from '../../shared/components/WrapperContainer';
-import { Box, Button, CircularProgress, Typography } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  Typography,
+} from '@mui/material';
 import { useDirectorId } from '../../shared/context/DirectorProvider';
 import { ITeacher } from '../../shared/types/ITeacher';
 import { useEffect, useState } from 'react';
@@ -7,6 +14,7 @@ import { teachers } from '../../api/services/teacher/requests';
 import { useNavigate } from 'react-router-dom';
 import IsData from '../../shared/components/IsData';
 import TeacherCard from './components/TeacherCard';
+import CreateOrEditTeacherForm from './components/CreateOrEditTeacherForm';
 
 const Teacher = () => {
   const { directorId } = useDirectorId();
@@ -14,6 +22,8 @@ const Teacher = () => {
   const [teacherData, setTeacherData] = useState<ITeacher[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [snackbarText, setSnackbarText] = useState('');
 
   const handleGoDirector = () => navigate('/diretores');
 
@@ -38,6 +48,17 @@ const Teacher = () => {
   //   }
   // }, [showForm, teacherData]);
 
+  const handleClose = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   return (
     <WrapperContainer>
       <Box
@@ -56,7 +77,7 @@ const Teacher = () => {
         <Typography sx={{ fontSize: '2.5rem' }}>Professores</Typography>
         {!showForm && teacherData?.length && directorId ? (
           <Button
-            disabled={teacherData?.length === 10 || true}
+            disabled={teacherData?.length === 10}
             sx={{
               '@media screen and (max-width: 650px)': {
                 position: 'absolute',
@@ -132,6 +153,30 @@ const Teacher = () => {
       {!loading && !teacherData?.length && !showForm && directorId ? (
         <IsData title="Ainda não há professores" setShowForm={setShowForm} />
       ) : null}
+      {showForm && (
+        <CreateOrEditTeacherForm
+          setShowForm={setShowForm}
+          setTeacherData={setTeacherData}
+          setSnackbarText={setSnackbarText}
+          setOpen={setOpen}
+        />
+      )}
+
+      <Snackbar
+        open={open}
+        autoHideDuration={1500}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackbarText.includes('excluído') ? 'error' : 'success'}
+          variant="filled"
+          sx={{ width: '100%', fontSize: '1.5rem' }}
+        >
+          {snackbarText}
+        </Alert>
+      </Snackbar>
     </WrapperContainer>
   );
 };

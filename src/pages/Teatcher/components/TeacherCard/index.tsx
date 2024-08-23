@@ -9,11 +9,11 @@ import {
   Typography,
 } from '@mui/material';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
-import { ITeacher } from '../../../shared/types/ITeacher';
-import { useDirectorId } from '../../../shared/context/DirectorProvider';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import dayjs from 'dayjs';
+import { useDirectorId } from '../../../../shared/context/DirectorProvider';
+import { ITeacher } from '../../../../shared/types/ITeacher';
 
 interface ITeacherCard {
   teacherData: ITeacher;
